@@ -1350,10 +1350,10 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
                 raise
         elif from_pt:
             # import pdb;pdb.set_trace()
-            my_pos_embeddings = torch.zeros(1024, 768)
-            my_pos_embeddings[:512] = state_dict['bert.embeddings.position_embeddings.weight']
-            my_pos_embeddings[512:] = state_dict['bert.embeddings.position_embeddings.weight'][-1][None,:].repeat(1024 - 512, 1)
-            state_dict['bert.embeddings.position_embeddings.weight'] = my_pos_embeddings
+            # my_pos_embeddings = torch.zeros(1024, 768)
+            # my_pos_embeddings[:512] = state_dict['bert.embeddings.position_embeddings.weight']
+            # my_pos_embeddings[512:] = state_dict['bert.embeddings.position_embeddings.weight'][-1][None,:].repeat(1024 - 512, 1)
+            # state_dict['bert.embeddings.position_embeddings.weight'] = my_pos_embeddings
             model, missing_keys, unexpected_keys, mismatched_keys, error_msgs = cls._load_state_dict_into_model(
                 model,
                 state_dict,
