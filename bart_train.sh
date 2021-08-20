@@ -16,7 +16,7 @@ python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summariza
     --adam_beta2 0.98 \
     --num_train_epochs 5 \
     --overwrite_output_dir \
-    --evaluation_strategy steps  --eval_steps 20000 --save_steps 20000 --warmup_steps 30000 --logging_steps 200 \
+    --evaluation_strategy steps  --eval_steps 1 --save_steps 20000 --warmup_steps 30000 --logging_steps 200 \
     --text_column document \
     --summary_column summary \
     --train_file $DS_BASE_DIR/train.json \
