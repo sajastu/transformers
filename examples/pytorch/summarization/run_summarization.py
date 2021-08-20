@@ -152,14 +152,14 @@ class DataTrainingArguments:
         },
     )
     max_target_length: Optional[int] = field(
-        default=256,
+        default=128,
         metadata={
             "help": "The maximum total sequence length for target text after tokenization. Sequences longer "
             "than this will be truncated, sequences shorter will be padded."
         },
     )
     val_max_target_length: Optional[int] = field(
-        default=None,
+        default=128,
         metadata={
             "help": "The maximum total sequence length for validation target text after tokenization. Sequences longer "
             "than this will be truncated, sequences shorter will be padded. Will default to `max_target_length`."
@@ -411,6 +411,7 @@ def main():
 
     def preprocess_function(examples):
         inputs = examples[text_column]
+        import pdb;pdb.set_trace()
         targets = examples[summary_column]
         inputs = [prefix + inp for inp in inputs]
         model_inputs = tokenizer(inputs, max_length=data_args.max_source_length, padding=padding, truncation=True)
