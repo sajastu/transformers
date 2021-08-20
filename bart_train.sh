@@ -9,8 +9,8 @@ python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summariza
     --do_eval \
     --do_predict \
     --output_dir $SAVE_MODEL_DIR/saved_models/$MODEL/$M_ID \
-    --per_device_train_batch_size=2 \
-    --per_device_eval_batch_size=4  \
+    --per_device_train_batch_size=1 \
+    --per_device_eval_batch_size=8  \
     --learning_rate 3e-5 \
     --weight_decay 0.01 \
     --adam_beta2 0.98 \
