@@ -9,14 +9,14 @@ python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summariza
     --do_eval \
     --do_predict \
     --output_dir $SAVE_MODEL_DIR/saved_models/$MODEL/$M_ID \
-    --per_device_train_batch_size=1 \
+    --per_device_train_batch_size=2 \
     --per_device_eval_batch_size=4  \
     --learning_rate 3e-5 \
     --weight_decay 0.01 \
     --adam_beta2 0.98 \
     --num_train_epochs 5 \
     --overwrite_output_dir \
-    --evaluation_strategy steps  --eval_steps 10000 --save_steps 10000 --warmup_steps 30000 --logging_steps 200 \
+    --evaluation_strategy steps  --eval_steps 20000 --save_steps 20000 --warmup_steps 30000 --logging_steps 200 \
     --text_column document \
     --summary_column summary \
     --train_file $DS_BASE_DIR/train.json \
