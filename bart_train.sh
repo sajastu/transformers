@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # debug
+#CUDA_VISIBLE_DEVICES=7 python examples/pytorch/summarization/run_summarization.py \
 
-#python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summarization/run_summarization.py --task_mode abstractive \
-CUDA_VISIBLE_DEVICES=7 python examples/pytorch/summarization/run_summarization.py --task_mode abstractive \
+python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summarization/run_summarization.py \
     --model_name_or_path facebook/bart-large \
     --do_train \
     --do_eval \
@@ -16,7 +16,7 @@ CUDA_VISIBLE_DEVICES=7 python examples/pytorch/summarization/run_summarization.p
     --adam_beta2 0.98 \
     --num_train_epochs 5 \
     --overwrite_output_dir \
-    --evaluation_strategy steps  --eval_steps 10000 --save_steps 1000 --warmup_steps 10000 --logging_steps 100 \
+    --evaluation_strategy steps  --eval_steps 10000 --save_steps 10000 --warmup_steps 30000 --logging_steps 200 \
     --text_column document \
     --summary_column summary \
     --train_file $DS_BASE_DIR/train.json \

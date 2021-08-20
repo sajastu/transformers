@@ -411,7 +411,7 @@ def main():
 
     def preprocess_function(examples):
         inputs = examples[text_column]
-        import pdb;pdb.set_trace()
+        inputs = [i.replace('</s><s>', '') for i in inputs]
         targets = examples[summary_column]
         inputs = [prefix + inp for inp in inputs]
         model_inputs = tokenizer(inputs, max_length=data_args.max_source_length, padding=padding, truncation=True)
