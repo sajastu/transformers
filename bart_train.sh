@@ -23,4 +23,4 @@ python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summariza
     --validation_file $DS_BASE_DIR/validation.json \
     --test_file $DS_BASE_DIR/test.json \
     --predict_with_generate \
-    --resume_from_checkpoint $SAVE_MODEL_DIR/saved_models/$MODEL/$M_ID/checkpoint-40000/
+    --resume_from_checkpoint $SAVE_MODEL_DIR/saved_models/$MODEL/$M_ID/checkpoint-60000/
