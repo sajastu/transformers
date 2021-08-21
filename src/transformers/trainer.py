@@ -1218,6 +1218,11 @@ class Trainer:
         # tr_loss is a tensor to avoid synchronization of TPUs through .item()
         tr_loss = torch.tensor(0.0).to(args.device)
         # _total_loss_scalar is updated everytime .item() has to be called on tr_loss and stores the sum of all losses
+                # set up wandb
+        wandb.init(project=self.args.output_dir.split('/')[-1], entity='sajastu')
+        wandb.config.update(args)
+        wandb.watch(model, log='all', log_freq=1000)
+
         self._total_loss_scalar = 0.0
         self._globalstep_last_logged = self.state.global_step
         model.zero_grad()
