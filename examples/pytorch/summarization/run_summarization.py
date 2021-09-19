@@ -152,14 +152,14 @@ class DataTrainingArguments:
         },
     )
     max_target_length: Optional[int] = field(
-        default=128,
+        default=256,
         metadata={
-            "help": "The maximum total sequence length for target text after tokenization. Sequences longer "
+            "help": "The maximum total s256equence length for target text after tokenization. Sequences longer "
             "than this will be truncated, sequences shorter will be padded."
         },
     )
     val_max_target_length: Optional[int] = field(
-        default=128,
+        default=256,
         metadata={
             "help": "The maximum total sequence length for validation target text after tokenization. Sequences longer "
             "than this will be truncated, sequences shorter will be padded. Will default to `max_target_length`."
@@ -557,6 +557,7 @@ def main():
 
     # Evaluation
     results = {}
+    # training_args.do_eval = False
     if training_args.do_eval:
         logger.info("*** Evaluate ***")
 

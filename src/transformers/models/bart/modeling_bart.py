@@ -507,11 +507,9 @@ BART_START_DOCSTRING = r"""
     This model inherits from :class:`~transformers.PreTrainedModel`. Check the superclass documentation for the generic
     methods the library implements for all its model (such as downloading or saving, resizing the input embeddings,
     pruning heads etc.)
-
     This model is also a PyTorch `torch.nn.Module <https://pytorch.org/docs/stable/nn.html#torch.nn.Module>`__
     subclass. Use it as a regular PyTorch Module and refer to the PyTorch documentation for all matter related to
     general usage and behavior.
-
     Parameters:
         config (:class:`~transformers.BartConfig`):
             Model configuration class with all the parameters of the model. Initializing with a config file does not
@@ -521,33 +519,24 @@ BART_START_DOCSTRING = r"""
 
 BART_GENERATION_EXAMPLE = r"""
     Summarization example::
-
         >>> from transformers import BartTokenizer, BartForConditionalGeneration, BartConfig
-
         >>> model = BartForConditionalGeneration.from_pretrained('facebook/bart-large-cnn')
         >>> tokenizer = BartTokenizer.from_pretrained('facebook/bart-large-cnn')
-
         >>> ARTICLE_TO_SUMMARIZE = "My friends are cool but they eat too many carbs."
         >>> inputs = tokenizer([ARTICLE_TO_SUMMARIZE], max_length=1024, return_tensors='pt')
-
         >>> # Generate Summary
         >>> summary_ids = model.generate(inputs['input_ids'], num_beams=4, max_length=5, early_stopping=True)
         >>> print([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids])
-
     Mask filling example::
-
         >>> from transformers import BartTokenizer, BartForConditionalGeneration
         >>> tokenizer = BartTokenizer.from_pretrained('facebook/bart-large')
         >>> TXT = "My friends are <mask> but they eat too many carbs."
-
         >>> model = BartForConditionalGeneration.from_pretrained('facebook/bart-large')
         >>> input_ids = tokenizer([TXT], return_tensors='pt')['input_ids']
         >>> logits = model(input_ids).logits
-
         >>> masked_index = (input_ids[0] == tokenizer.mask_token_id).nonzero().item()
         >>> probs = logits[0, masked_index].softmax(dim=0)
         >>> values, predictions = probs.topk(5)
-
         >>> tokenizer.decode(predictions).split()
 """
 
@@ -556,61 +545,46 @@ BART_INPUTS_DOCSTRING = r"""
         input_ids (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`):
             Indices of input sequence tokens in the vocabulary. Padding will be ignored by default should you provide
             it.
-
             Indices can be obtained using :class:`~transformers.BartTokenizer`. See
             :meth:`transformers.PreTrainedTokenizer.encode` and :meth:`transformers.PreTrainedTokenizer.__call__` for
             details.
-
             `What are input IDs? <../glossary.html#input-ids>`__
         attention_mask (:obj:`torch.Tensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
             Mask to avoid performing attention on padding token indices. Mask values selected in ``[0, 1]``:
-
             - 1 for tokens that are **not masked**,
             - 0 for tokens that are **masked**.
-
             `What are attention masks? <../glossary.html#attention-mask>`__
         decoder_input_ids (:obj:`torch.LongTensor` of shape :obj:`(batch_size, target_sequence_length)`, `optional`):
             Indices of decoder input sequence tokens in the vocabulary.
-
             Indices can be obtained using :class:`~transformers.BartTokenizer`. See
             :meth:`transformers.PreTrainedTokenizer.encode` and :meth:`transformers.PreTrainedTokenizer.__call__` for
             details.
-
             `What are decoder input IDs? <../glossary.html#decoder-input-ids>`__
-
             Bart uses the :obj:`eos_token_id` as the starting token for :obj:`decoder_input_ids` generation. If
             :obj:`past_key_values` is used, optionally only the last :obj:`decoder_input_ids` have to be input (see
             :obj:`past_key_values`).
-
             For translation and summarization training, :obj:`decoder_input_ids` should be provided. If no
             :obj:`decoder_input_ids` is provided, the model will create this tensor by shifting the :obj:`input_ids` to
             the right for denoising pre-training following the paper.
         decoder_attention_mask (:obj:`torch.LongTensor` of shape :obj:`(batch_size, target_sequence_length)`, `optional`):
             Default behavior: generate a tensor that ignores pad tokens in :obj:`decoder_input_ids`. Causal mask will
             also be used by default.
-
             If you want to change padding behavior, you should read :func:`modeling_bart._prepare_decoder_inputs` and
             modify to your needs. See diagram 1 in `the paper <https://arxiv.org/abs/1910.13461>`__ for more
             information on the default strategy.
         head_mask (:obj:`torch.Tensor` of shape :obj:`(encoder_layers, encoder_attention_heads)`, `optional`):
             Mask to nullify selected heads of the attention modules in the encoder. Mask values selected in ``[0, 1]``:
-
             - 1 indicates the head is **not masked**,
             - 0 indicates the head is **masked**.
-
         decoder_head_mask (:obj:`torch.Tensor` of shape :obj:`(decoder_layers, decoder_attention_heads)`, `optional`):
             Mask to nullify selected heads of the attention modules in the decoder. Mask values selected in ``[0, 1]``:
-
             - 1 indicates the head is **not masked**,
             - 0 indicates the head is **masked**.
-
         cross_attn_head_mask (:obj:`torch.Tensor` of shape :obj:`(decoder_layers, decoder_attention_heads)`, `optional`):
             Mask to nullify selected heads of the cross-attention modules in the decoder. Mask values selected in ``[0,
             1]``:
-
             - 1 indicates the head is **not masked**,
             - 0 indicates the head is **masked**.
-
         encoder_outputs (:obj:`tuple(tuple(torch.FloatTensor)`, `optional`):
             Tuple consists of (:obj:`last_hidden_state`, `optional`: :obj:`hidden_states`, `optional`:
             :obj:`attentions`) :obj:`last_hidden_state` of shape :obj:`(batch_size, sequence_length, hidden_size)`,
@@ -620,10 +594,8 @@ BART_INPUTS_DOCSTRING = r"""
             Tuple of :obj:`tuple(torch.FloatTensor)` of length :obj:`config.n_layers`, with each tuple having 2 tensors
             of shape :obj:`(batch_size, num_heads, sequence_length, embed_size_per_head)`) and 2 additional tensors of
             shape :obj:`(batch_size, num_heads, encoder_sequence_length, embed_size_per_head)`.
-
             Contains pre-computed hidden-states (key and values in the self-attention blocks and in the cross-attention
             blocks) that can be used (see :obj:`past_key_values` input) to speed up sequential decoding.
-
             If :obj:`past_key_values` are used, the user can optionally input only the last :obj:`decoder_input_ids`
             (those that don't have their past key value states given to this model) of shape :obj:`(batch_size, 1)`
             instead of all :obj:`decoder_input_ids`` of shape :obj:`(batch_size, sequence_length)`.
@@ -636,7 +608,6 @@ BART_INPUTS_DOCSTRING = r"""
             representation. If :obj:`past_key_values` is used, optionally only the last :obj:`decoder_inputs_embeds`
             have to be input (see :obj:`past_key_values`). This is useful if you want more control over how to convert
             :obj:`decoder_input_ids` indices into associated vectors than the model's internal embedding lookup matrix.
-
             If :obj:`decoder_input_ids` and :obj:`decoder_inputs_embeds` are both unset, :obj:`decoder_inputs_embeds`
             takes the value of :obj:`inputs_embeds`.
         use_cache (:obj:`bool`, `optional`):
@@ -657,7 +628,6 @@ class BartEncoder(BartPretrainedModel):
     """
     Transformer encoder consisting of *config.encoder_layers* self attention layers. Each layer is a
     :class:`BartEncoderLayer`.
-
     Args:
         config: BartConfig
         embed_tokens (nn.Embedding): output embedding
@@ -703,25 +673,19 @@ class BartEncoder(BartPretrainedModel):
             input_ids (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`):
                 Indices of input sequence tokens in the vocabulary. Padding will be ignored by default should you
                 provide it.
-
                 Indices can be obtained using :class:`~transformers.BartTokenizer`. See
                 :meth:`transformers.PreTrainedTokenizer.encode` and :meth:`transformers.PreTrainedTokenizer.__call__`
                 for details.
-
                 `What are input IDs? <../glossary.html#input-ids>`__
             attention_mask (:obj:`torch.Tensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
                 Mask to avoid performing attention on padding token indices. Mask values selected in ``[0, 1]``:
-
                 - 1 for tokens that are **not masked**,
                 - 0 for tokens that are **masked**.
-
                 `What are attention masks? <../glossary.html#attention-mask>`__
             head_mask (:obj:`torch.Tensor` of shape :obj:`(encoder_layers, encoder_attention_heads)`, `optional`):
                 Mask to nullify selected heads of the attention modules. Mask values selected in ``[0, 1]``:
-
                 - 1 indicates the head is **not masked**,
                 - 0 indicates the head is **masked**.
-
             inputs_embeds (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
                 Optionally, instead of passing :obj:`input_ids` you can choose to directly pass an embedded
                 representation. This is useful if you want more control over how to convert :obj:`input_ids` indices
@@ -784,7 +748,6 @@ class BartEncoder(BartPretrainedModel):
             else:
                 if getattr(self.config, "gradient_checkpointing", False) and self.training:
                 # if True and self.training:
-
                     def create_custom_forward(module):
                         def custom_forward(*inputs):
                             return module(*inputs, output_attentions)
@@ -823,7 +786,6 @@ class BartEncoder(BartPretrainedModel):
 class BartDecoder(BartPretrainedModel):
     """
     Transformer decoder consisting of *config.decoder_layers* layers. Each layer is a :class:`BartDecoderLayer`
-
     Args:
         config: BartConfig
         embed_tokens (nn.Embedding): output embedding
@@ -895,18 +857,14 @@ class BartDecoder(BartPretrainedModel):
             input_ids (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`):
                 Indices of input sequence tokens in the vocabulary. Padding will be ignored by default should you
                 provide it.
-
                 Indices can be obtained using :class:`~transformers.BartTokenizer`. See
                 :meth:`transformers.PreTrainedTokenizer.encode` and :meth:`transformers.PreTrainedTokenizer.__call__`
                 for details.
-
                 `What are input IDs? <../glossary.html#input-ids>`__
             attention_mask (:obj:`torch.Tensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
                 Mask to avoid performing attention on padding token indices. Mask values selected in ``[0, 1]``:
-
                 - 1 for tokens that are **not masked**,
                 - 0 for tokens that are **masked**.
-
                 `What are attention masks? <../glossary.html#attention-mask>`__
             encoder_hidden_states (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, encoder_sequence_length, hidden_size)`, `optional`):
                 Sequence of hidden-states at the output of the last layer of the encoder. Used in the cross-attention
@@ -914,33 +872,25 @@ class BartDecoder(BartPretrainedModel):
             encoder_attention_mask (:obj:`torch.LongTensor` of shape :obj:`(batch_size, encoder_sequence_length)`, `optional`):
                 Mask to avoid performing cross-attention on padding tokens indices of encoder input_ids. Mask values
                 selected in ``[0, 1]``:
-
                 - 1 for tokens that are **not masked**,
                 - 0 for tokens that are **masked**.
-
                 `What are attention masks? <../glossary.html#attention-mask>`__
             head_mask (:obj:`torch.Tensor` of shape :obj:`(decoder_layers, decoder_attention_heads)`, `optional`):
                 Mask to nullify selected heads of the attention modules. Mask values selected in ``[0, 1]``:
-
                 - 1 indicates the head is **not masked**,
                 - 0 indicates the head is **masked**.
-
             cross_attn_head_mask (:obj:`torch.Tensor` of shape :obj:`(decoder_layers, decoder_attention_heads)`, `optional`):
                 Mask to nullify selected heads of the cross-attention modules in the decoder to avoid performing
                 cross-attention on hidden heads. Mask values selected in ``[0, 1]``:
-
                 - 1 indicates the head is **not masked**,
                 - 0 indicates the head is **masked**.
-
             past_key_values (:obj:`tuple(tuple(torch.FloatTensor))`, `optional`, returned when ``use_cache=True`` is passed or when ``config.use_cache=True``):
                 Tuple of :obj:`tuple(torch.FloatTensor)` of length :obj:`config.n_layers`, with each tuple having 2
                 tensors of shape :obj:`(batch_size, num_heads, sequence_length, embed_size_per_head)`) and 2 additional
                 tensors of shape :obj:`(batch_size, num_heads, encoder_sequence_length, embed_size_per_head)`.
-
                 Contains pre-computed hidden-states (key and values in the self-attention blocks and in the
                 cross-attention blocks) that can be used (see :obj:`past_key_values` input) to speed up sequential
                 decoding.
-
                 If :obj:`past_key_values` are used, the user can optionally input only the last
                 :obj:`decoder_input_ids` (those that don't have their past key value states given to this model) of
                 shape :obj:`(batch_size, 1)` instead of all :obj:`decoder_input_ids`` of shape :obj:`(batch_size,
@@ -1280,7 +1230,6 @@ class BartForConditionalGeneration(BartPretrainedModel):
             Labels for computing the masked language modeling loss. Indices should either be in ``[0, ...,
             config.vocab_size]`` or -100 (see ``input_ids`` docstring). Tokens with indices set to ``-100`` are ignored
             (masked), the loss is only computed for the tokens with labels in ``[0, ..., config.vocab_size]``.
-
         Returns:
         """
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
@@ -1673,18 +1622,14 @@ class BartForCausalLM(BartPretrainedModel):
             input_ids (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`):
                 Indices of input sequence tokens in the vocabulary. Padding will be ignored by default should you
                 provide it.
-
                 Indices can be obtained using :class:`~transformers.BartTokenizer`. See
                 :meth:`transformers.PreTrainedTokenizer.encode` and :meth:`transformers.PreTrainedTokenizer.__call__`
                 for details.
-
                 `What are input IDs? <../glossary.html#input-ids>`__
             attention_mask (:obj:`torch.Tensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
                 Mask to avoid performing attention on padding token indices. Mask values selected in ``[0, 1]``:
-
                 - 1 for tokens that are **not masked**,
                 - 0 for tokens that are **masked**.
-
                 `What are attention masks? <../glossary.html#attention-mask>`__
             encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
                 Sequence of hidden-states at the output of the last layer of the encoder. Used in the cross-attention
@@ -1694,27 +1639,21 @@ class BartForCausalLM(BartPretrainedModel):
                 in the cross-attention if the model is configured as a decoder. Mask values selected in ``[0, 1]``:
             head_mask (:obj:`torch.Tensor` of shape :obj:`(decoder_layers, decoder_attention_heads)`, `optional`):
                 Mask to nullify selected heads of the attention modules. Mask values selected in ``[0, 1]``:
-
                 - 1 indicates the head is **not masked**,
                 - 0 indicates the head is **masked**.
-
             cross_attn_head_mask (:obj:`torch.Tensor` of shape :obj:`(decoder_layers, decoder_attention_heads)`, `optional`):
                 Mask to nullify selected heads of the cross-attention modules. Mask values selected in ``[0, 1]``:
-
                 - 1 indicates the head is **not masked**,
                 - 0 indicates the head is **masked**.
-
             past_key_values (:obj:`tuple(tuple(torch.FloatTensor))`, `optional`, returned when ``use_cache=True`` is passed or when ``config.use_cache=True``):
                 Tuple of :obj:`tuple(torch.FloatTensor)` of length :obj:`config.n_layers`, with each tuple having 2
                 tensors of shape :obj:`(batch_size, num_heads, sequence_length, embed_size_per_head)`) and 2 additional
                 tensors of shape :obj:`(batch_size, num_heads, encoder_sequence_length, embed_size_per_head)`. The two
                 additional tensors are only required when the model is used as a decoder in a Sequence to Sequence
                 model.
-
                 Contains pre-computed hidden-states (key and values in the self-attention blocks and in the
                 cross-attention blocks) that can be used (see :obj:`past_key_values` input) to speed up sequential
                 decoding.
-
                 If :obj:`past_key_values` are used, the user can optionally input only the last ``decoder_input_ids``
                 (those that don't have their past key value states given to this model) of shape :obj:`(batch_size, 1)`
                 instead of all ``decoder_input_ids`` of shape :obj:`(batch_size, sequence_length)`.
@@ -1726,7 +1665,6 @@ class BartForCausalLM(BartPretrainedModel):
             use_cache (:obj:`bool`, `optional`):
                 If set to :obj:`True`, :obj:`past_key_values` key value states are returned and can be used to speed up
                 decoding (see :obj:`past_key_values`).
-
                 - 1 for tokens that are **not masked**,
                 - 0 for tokens that are **masked**.
             output_attentions (:obj:`bool`, `optional`):
@@ -1737,19 +1675,14 @@ class BartForCausalLM(BartPretrainedModel):
                 for more detail.
             return_dict (:obj:`bool`, `optional`):
                 Whether or not to return a :class:`~transformers.file_utils.ModelOutput` instead of a plain tuple.
-
         Returns:
-
         Example::
-
             >>> from transformers import BartTokenizer, BartForCausalLM
-
             >>> tokenizer = BartTokenizer.from_pretrained('facebook/bart-large')
             >>> model = BartForCausalLM.from_pretrained('facebook/bart-large', add_cross_attention=False)
             >>> assert model.config.is_decoder, f"{model.__class__} has to be configured as a decoder."
             >>> inputs = tokenizer("Hello, my dog is cute", return_tensors="pt")
             >>> outputs = model(**inputs)
-
             >>> last_hidden_states = outputs.last_hidden_state
         """
 

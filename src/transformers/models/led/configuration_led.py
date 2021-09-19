@@ -157,10 +157,13 @@ class LEDConfig(PretrainedConfig):
         self.encoder_layerdrop = encoder_layerdrop
         self.decoder_layerdrop = decoder_layerdrop
         self.classifier_dropout = classifier_dropout
-        self.use_cache = use_cache
         self.num_hidden_layers = encoder_layers
         self.attention_window = attention_window
-        self.gradient_checkpointing = gradient_checkpointing
+        # self.use_cache = use_cache
+        # self.gradient_checkpointing = gradient_checkpointing
+        self.gradient_checkpointing =True
+        self.use_cache = False
+
 
     @property
     def num_attention_heads(self) -> int:

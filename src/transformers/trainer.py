@@ -18,6 +18,8 @@ The Trainer class, to easily train a 🤗 Transformers from scratch or finetune 
 
 import collections
 import inspect
+import subprocess
+
 import math
 import os
 import random
@@ -972,6 +974,7 @@ class Trainer:
                 find_unused_parameters = not getattr(model.config, "gradient_checkpointing", False)
             else:
                 find_unused_parameters = True
+
             model = nn.parallel.DistributedDataParallel(
                 model,
                 device_ids=[self.args.local_rank],
@@ -1944,6 +1947,7 @@ class Trainer:
 
         # Good practice: save your training arguments together with the trained model
         torch.save(self.args, os.path.join(output_dir, "training_args.bin"))
+        subprocess.call(['gupload', output_dir])
 
     def store_flos(self):
         # Storing the number of floating-point operations that went into the model
