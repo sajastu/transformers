@@ -18,6 +18,8 @@ Torch utilities for the Trainer class.
 
 import datetime
 import json
+import subprocess
+
 import math
 import os
 import warnings
@@ -950,6 +952,7 @@ def save_metrics(self, split, metrics, combined=True):
         all_metrics.update(metrics)
         with open(path, "w") as f:
             json.dump(all_metrics, f, indent=4, sort_keys=True)
+        # subprocess.call(['gupload', path])
 
 
 def save_state(self):
