@@ -446,6 +446,7 @@ def main():
                 desc="Running tokenizer on train dataset",
             )
 
+    # training_args.do_eval = False
     if training_args.do_eval:
         max_target_length = data_args.val_max_target_length
         if "validation" not in raw_datasets:
@@ -557,7 +558,7 @@ def main():
 
     # Evaluation
     results = {}
-    # training_args.do_eval = False
+    training_args.do_eval = False
     if training_args.do_eval:
         logger.info("*** Evaluate ***")
 
