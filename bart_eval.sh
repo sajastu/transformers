@@ -2,7 +2,7 @@
 #    --model_name_or_path /disk1/sajad/saved_models/bart-tldr9/checkpoint-880000/ \
 #CUDA_VISIBLE_DEVICES=0 python3 examples/pytorch/summarization/run_summarization.py \
 
-for (( step=10000; step<=150000; step+=10000 )); do
+for (( step=10000; step<=10000; step+=10000 )); do
     python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summarization/run_summarization.py \
           --model_name_or_path $SAVE_MODEL_DIR/checkpoint-$step \
           --do_predict \
