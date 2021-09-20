@@ -11,7 +11,7 @@ for (( step=10000; step<=10000; step+=10000 )); do
           --per_device_eval_batch_size=10 \
           --overwrite_output_dir \
           --evaluation_strategy steps  --eval_steps 20000 --save_steps 20000 --warmup_steps 32000 --logging_steps 200 \
-          --text_column document \
+          --text_column intro \
           --summary_column summary \
           --train_file $DS_BASE_DIR/val.json  \
           --validation_file $DS_BASE_DIR/val.json  \
