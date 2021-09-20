@@ -35,8 +35,6 @@ with open('/trainman-mount/trainman-k8s-storage-349d2c46-5192-4e7b-8567-ada9d1d9
                 'summary': ent['summary'].replace('\n', '').lower()
             }
         )
-        if len(all_posts) == 10000:
-            break
 
 # set split: 98-1-1
 
@@ -48,8 +46,8 @@ splits = {
     'val': [],
     'test': []
 }
-splits['train'] = all_posts[:int(.98 * len(all_posts))-1]
-splits['val'] = all_posts[int(.98 * len(all_posts))-1: int(.99 * len(all_posts))]
+splits['train'] = all_posts[:int(.98 * len(all_posts))]
+splits['val'] = all_posts[int(.98 * len(all_posts)): int(.99 * len(all_posts))]
 splits['test'] = all_posts[int(.99 * len(all_posts)):]
 
 # now wrting splits for BART and CurrSumm
