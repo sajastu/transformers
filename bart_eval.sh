@@ -8,7 +8,7 @@ for (( step=10000; step<=10000; step+=10000 )); do
           --do_predict \
           --output_dir $SAVE_MODEL_DIR/checkpoint-$step \
           --per_device_train_batch_size=1 \
-          --per_device_eval_batch_size=10 \
+          --per_device_eval_batch_size=15 \
           --overwrite_output_dir \
           --evaluation_strategy steps  --eval_steps 20000 --save_steps 20000 --warmup_steps 32000 --logging_steps 200 \
           --text_column intro \
