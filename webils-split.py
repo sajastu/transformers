@@ -35,6 +35,8 @@ with open('/trainman-mount/trainman-k8s-storage-349d2c46-5192-4e7b-8567-ada9d1d9
                 'summary': ent['summary'].replace('\n', '').lower()
             }
         )
+        if len(all_posts) == 10000:
+            break
 
 # set split: 98-1-1
 
