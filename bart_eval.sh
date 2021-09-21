@@ -27,7 +27,7 @@ python -m torch.distributed.launch --nproc_per_node=2 examples/pytorch/summariza
         --do_predict \
         --output_dir /disk1/sajad/sci-trained-models/bart/saved_models/bart/bart-intro-arxivL-cnn/checkpoint-3000 \
         --per_device_train_batch_size=1 \
-        --per_device_eval_batch_size=1 \
+        --per_device_eval_batch_size=4 \
         --overwrite_output_dir \
         --evaluation_strategy steps  --eval_steps 20000 --save_steps 20000 --warmup_steps 32000 --logging_steps 200 \
         --text_column intro \
