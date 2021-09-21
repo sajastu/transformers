@@ -21,7 +21,8 @@
 
 ##################################################
 
-python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summarization/run_summarization.py \
+#python -m torch.distributed.launch --nproc_per_node=8 examples/pytorch/summarization/run_summarization.py \
+CUDA_VISIBLE_DEVICES=0 python3 examples/pytorch/summarization/run_summarization.py \
         --model_name_or_path /disk1/sajad/sci-trained-models/bart/saved_models/bart/bart-intro-arxivL-cnn/checkpoint-3000 \
         --do_predict \
         --output_dir /disk1/sajad/sci-trained-models/bart/saved_models/bart/bart-intro-arxivL-cnn/checkpoint-3000 \
