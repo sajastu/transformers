@@ -32,7 +32,7 @@ CUDA_VISIBLE_DEVICES=0 python3 examples/pytorch/summarization/run_summarization.
         --evaluation_strategy steps  --eval_steps 20000 --save_steps 20000 --warmup_steps 32000 --logging_steps 200 \
         --text_column intro \
         --summary_column summary \
-        --train_file $DS_BASE_DIR/test.json  \
-        --validation_file $DS_BASE_DIR/test.json  \
+        --train_file $DS_BASE_DIR/train.json  \
+        --validation_file $DS_BASE_DIR/val.json  \
         --test_file $DS_BASE_DIR/test.json \
         --predict_with_generate
